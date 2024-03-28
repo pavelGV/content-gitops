@@ -21,8 +21,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r ./python/requirements.txt
     - name: Build & Push Image
+      env:
+        DOCKERPW: ${{ secrets.DOCKERPW }}
       run: |
         cd ./python
-        docker login -u "kube" -p "${{ secrets.DOCKERPW }}"
+        docker login -u "kube" -p "$DOCKERPW"
         docker image build -t harbor.uzhgorod.co.ua/gitops:hellov1.0 .
         docker push harbor.uzhgorod.co.ua/gitops:hellov1.0
